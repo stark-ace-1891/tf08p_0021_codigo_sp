@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:tf08p_0021_codigo_sp/pages/my_drawer_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomPage extends StatefulWidget {
   @override
@@ -10,8 +11,32 @@ class HomPage extends StatefulWidget {
 }
 
 class _HomPageState extends State<HomPage> {
+  TextEditingController _fullNameController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  
   bool isDarkMode = false;
   int gender = 1;
+
+  saveSharedPreferences() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setString("fullName", _fullNameController.text);
+    _prefs.setString("address", _addressController.text);
+    _prefs.setBool("darkMode", isDarkMode);
+    _prefs.setInt("gender", gender);
+    print("Guardando en shared preferences");
+  }
+
+  getDataSharedPreferences() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    String fullName = _prefs.getString("fullName") ?? "-";
+    String address = _prefs.getString("address") ?? "-";
+    isDarkMode = _prefs.getBool("darkMode") ?? false;
+    gender = _prefs.getInt("gender") ?? 1;
+    print(fullName);
+    print(address);
+    print(isDarkMode);
+    print(gender);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +61,7 @@ class _HomPageState extends State<HomPage> {
               height: 12,
             ),
             TextField(
+              controller: _fullNameController,
               decoration: InputDecoration(
                 hintText: "Nombre completo",
               ),
@@ -44,6 +70,7 @@ class _HomPageState extends State<HomPage> {
               height: 20,
             ),
             TextField(
+              controller: _addressController,
               decoration: InputDecoration(
                 hintText: "Direccion actual",
               ),
@@ -96,7 +123,12 @@ class _HomPageState extends State<HomPage> {
               width: double.infinity,
               height: 50,
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  // print(_fullNameController.text);
+                  // print(_addressController.text);
+                  // saveSharedPreferences();
+                  getDataSharedPreferences();
+                },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.black,
                   shape: RoundedRectangleBorder(
