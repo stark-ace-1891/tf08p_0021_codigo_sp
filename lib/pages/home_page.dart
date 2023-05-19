@@ -1,99 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:tf08p_0021_codigo_sp/pages/my_drawer_widget.dart';
 
-class HomPage extends StatelessWidget {
-  const HomPage({super.key});
+class HomPage extends StatefulWidget {
+  @override
+  State<HomPage> createState() => _HomPageState();
+}
+
+class _HomPageState extends State<HomPage> {
+  bool isDarkMode = false;
+  int gender = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                        "https://images.pexels.com/photos/13813545/pexels-photo-13813545.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-                  ),
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.white12,
-                        backgroundImage: NetworkImage(
-                          "https://images.pexels.com/photos/8062069/pexels-photo-8062069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                        ),
-                      ),
-                      Text(
-                        "Fiorella Gonzales Tapia",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "Administrador",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text("Mi perfil"),
-                leading: Icon(
-                  Icons.people,
-                  color: Colors.black.withOpacity(0.6),
-                ),
-              ),
-              ListTile(
-                title: Text("Portafolio General"),
-                leading: Icon(
-                  Icons.file_copy,
-                  color: Colors.black.withOpacity(0.6),
-                ),
-              ),
-              ListTile(
-                title: Text("Cambiar contraseña"),
-                leading: Icon(
-                  Icons.lock,
-                  color: Colors.black.withOpacity(0.6),
-                ),
-              ),
-              Divider(
-                indent: 12,
-                endIndent: 12,
-              ),
-              ListTile(
-                title: Text("Salir del App"),
-                leading: Icon(
-                  Icons.exit_to_app,
-                  color: Colors.black.withOpacity(0.6),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: MyDrawerWidget(),
       appBar: AppBar(
         title: Text("Shareds Preferences App"),
       ),
-      body: Column(
-        children: [],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Configuracion General",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                hintText: "Nombre completo",
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                hintText: "Direccion actual",
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            // Switch(
+            //   value: false,
+            //   onChanged: (bool value) {},
+            // ),
+            SwitchListTile(
+              value: isDarkMode,
+              title: Text("Modo oscuro"),
+              onChanged: (bool value) {
+                isDarkMode = value;
+                print(isDarkMode);
+                setState(() {});
+              },
+            ),
+            // Radio(
+            //   value: 1,
+            //   groupValue: 1,
+            //   onChanged: (int? value) {},
+            // ),
+            RadioListTile(
+              value: 1,
+              title: Text("Masculino"),
+              groupValue: gender,
+              onChanged: (int? value) {
+                gender = value!;
+                print(gender);
+                setState(() {});
+              },
+            ),
+            RadioListTile(
+              value: 2,
+              title: Text("Femenino"),
+              groupValue: gender,
+              onChanged: (int? value) {
+                gender = value!;
+                print(gender);
+                setState(() {});
+              },
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                icon: Icon(
+                  Icons.save,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  "Guardar Data",
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
