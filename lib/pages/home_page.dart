@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:tf08p_0021_codigo_sp/pages/my_drawer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tf08p_0021_codigo_sp/utils/shared_global.dart';
 
 class HomPage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class HomPage extends StatefulWidget {
 }
 
 class _HomPageState extends State<HomPage> {
+  final SharedGlobal _sharedGlobal = SharedGlobal();
   TextEditingController _fullNameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   
@@ -18,24 +20,11 @@ class _HomPageState extends State<HomPage> {
   int gender = 1;
 
   saveSharedPreferences() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setString("fullName", _fullNameController.text);
-    _prefs.setString("address", _addressController.text);
-    _prefs.setBool("darkMode", isDarkMode);
-    _prefs.setInt("gender", gender);
+    _sharedGlobal.fullName = _fullNameController.text;
+    _sharedGlobal.address = _addressController.text;
+    _sharedGlobal.darkMode = isDarkMode;
+    _sharedGlobal.gender = gender;
     print("Guardando en shared preferences");
-  }
-
-  getDataSharedPreferences() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    String fullName = _prefs.getString("fullName") ?? "-";
-    String address = _prefs.getString("address") ?? "-";
-    isDarkMode = _prefs.getBool("darkMode") ?? false;
-    gender = _prefs.getInt("gender") ?? 1;
-    print(fullName);
-    print(address);
-    print(isDarkMode);
-    print(gender);
   }
 
   @override

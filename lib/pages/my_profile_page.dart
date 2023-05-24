@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tf08p_0021_codigo_sp/utils/shared_global.dart';
 
 class MyProfilePage extends StatefulWidget {
   const MyProfilePage({super.key});
@@ -9,28 +9,13 @@ class MyProfilePage extends StatefulWidget {
 }
 
 class _MyProfilePageState extends State<MyProfilePage> {
+
+  final SharedGlobal _sharedGlobal = SharedGlobal();
+
   String fullName = "";
   String address = "";
   bool isDarkMode = false;
   int gender = 1;
-
-  @override
-  initState() {
-    super.initState();
-    getDataShared();
-  }
-
-  getDataShared() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    fullName = _prefs.getString("fullName") ?? "-";
-    address = _prefs.getString("address") ?? "-";
-    isDarkMode = _prefs.getBool("darkMode") ?? false;
-    gender = _prefs.getInt("gender") ?? 1;
-    
-    setState(() {
-      
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +41,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 "Aqui va tu nombre",
               ),
               subtitle: Text(
-                fullName,
+                _sharedGlobal.fullName,
               ),
             ),
             ListTile(
@@ -65,13 +50,13 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 "Aqui va tu direccion",
               ),
               subtitle: Text(
-                address,
+                _sharedGlobal.address,
               ),
             ),
             ListTile(
               leading: Icon(Icons.dark_mode),
               title: Text(
-                isDarkMode ? "Activo" : "Inactivo",
+                _sharedGlobal.darkMode ? "Activo" : "Inactivo",
               ),
               subtitle: Text(
                 "Modo Oscuro",
@@ -80,7 +65,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
             ListTile(
               leading: Icon(Icons.ac_unit),
               title: Text(
-                gender == 1 ? "Masculino" : "Femenino",
+                _sharedGlobal.gender == 1 ? "Masculino" : "Femenino",
               ),
               subtitle: Text(
                 "Genero",
