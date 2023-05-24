@@ -126,8 +126,7 @@ class _HomPageState extends State<HomPage> {
                 onPressed: () {
                   // print(_fullNameController.text);
                   // print(_addressController.text);
-                  // saveSharedPreferences();
-                  getDataSharedPreferences();
+                  saveSharedPreferences();
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.black,

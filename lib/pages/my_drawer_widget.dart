@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:tf08p_0021_codigo_sp/pages/my_profile_page.dart';
 
 class MyDrawerWidget extends StatelessWidget {
   const MyDrawerWidget({super.key});
@@ -53,6 +54,9 @@ class MyDrawerWidget extends StatelessWidget {
               ),
             ),
             ListTile(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
+              },
               title: Text("Mi perfil"),
               leading: Icon(
                 Icons.people,
